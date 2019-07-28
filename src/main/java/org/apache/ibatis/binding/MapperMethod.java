@@ -273,15 +273,32 @@ public class MapperMethod {
   }
 
   public static class MethodSignature {
-
+    /**
+     * 返回值是否为集合或者数组
+     */
     private final boolean returnsMany;
+    /**
+     * 方法是否有@MapKey注解
+     */
     private final boolean returnsMap;
     private final boolean returnsVoid;
     private final boolean returnsCursor;
+    /**
+     * 返回值是否Optional类型
+     */
     private final boolean returnsOptional;
     private final Class<?> returnType;
+    /**
+     * 返回值为Map的键属性名
+     */
     private final String mapKey;
+    /**
+     * ResultHandler类型参数的索引位置
+     */
     private final Integer resultHandlerIndex;
+    /**
+     * RowBounds类型参数的索引位置
+     */
     private final Integer rowBoundsIndex;
     private final ParamNameResolver paramNameResolver;
 
