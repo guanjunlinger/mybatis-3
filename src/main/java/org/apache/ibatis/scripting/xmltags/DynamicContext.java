@@ -31,6 +31,9 @@ import org.apache.ibatis.session.Configuration;
  */
 public class DynamicContext {
 
+  /**
+   * 默认的绑定数据
+   */
   public static final String PARAMETER_OBJECT_KEY = "_parameter";
   public static final String DATABASE_ID_KEY = "_databaseId";
 
