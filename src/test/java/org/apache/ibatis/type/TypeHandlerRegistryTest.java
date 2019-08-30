@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.type;
 
@@ -55,32 +55,33 @@ class TypeHandlerRegistryTest {
   void shouldRegisterAndRetrieveComplexTypeHandler() {
     TypeHandler<List<URI>> fakeHandler = new TypeHandler<List<URI>>() {
 
-    @Override
-    public void setParameter( PreparedStatement ps, int i, List<URI> parameter, JdbcType jdbcType ) {
-      // do nothing, fake method
-    }
+      @Override
+      public void setParameter(PreparedStatement ps, int i, List<URI> parameter, JdbcType jdbcType) {
+        // do nothing, fake method
+      }
 
-    @Override
-    public List<URI> getResult( CallableStatement cs, int columnIndex ) {
-      // do nothing, fake method
-      return null;
-    }
+      @Override
+      public List<URI> getResult(CallableStatement cs, int columnIndex) {
+        // do nothing, fake method
+        return null;
+      }
 
-    @Override
-    public List<URI> getResult( ResultSet rs, int columnIndex ) {
-      // do nothing, fake method
-      return null;
-    }
+      @Override
+      public List<URI> getResult(ResultSet rs, int columnIndex) {
+        // do nothing, fake method
+        return null;
+      }
 
-    @Override
-    public List<URI> getResult( ResultSet rs, String columnName ) {
-      // do nothing, fake method
-      return null;
-    }
+      @Override
+      public List<URI> getResult(ResultSet rs, String columnName) {
+        // do nothing, fake method
+        return null;
+      }
 
     };
 
-    TypeReference<List<URI>> type = new TypeReference<List<URI>>(){};
+    TypeReference<List<URI>> type = new TypeReference<List<URI>>() {
+    };
 
     typeHandlerRegistry.register(type, fakeHandler);
     assertSame(fakeHandler, typeHandlerRegistry.getTypeHandler(type));
@@ -91,24 +92,24 @@ class TypeHandlerRegistryTest {
     TypeHandler<List<URI>> fakeHandler = new BaseTypeHandler<List<URI>>() {
 
       @Override
-      public void setNonNullParameter( PreparedStatement ps, int i, List<URI> parameter, JdbcType jdbcType ) {
+      public void setNonNullParameter(PreparedStatement ps, int i, List<URI> parameter, JdbcType jdbcType) {
         // do nothing, fake method
       }
 
       @Override
-      public List<URI> getNullableResult( ResultSet rs, String columnName ) {
-        // do nothing, fake method
-        return null;
-      }
-
-      @Override
-      public List<URI> getNullableResult( ResultSet rs, int columnIndex ) {
+      public List<URI> getNullableResult(ResultSet rs, String columnName) {
         // do nothing, fake method
         return null;
       }
 
       @Override
-      public List<URI> getNullableResult( CallableStatement cs, int columnIndex ) {
+      public List<URI> getNullableResult(ResultSet rs, int columnIndex) {
+        // do nothing, fake method
+        return null;
+      }
+
+      @Override
+      public List<URI> getNullableResult(CallableStatement cs, int columnIndex) {
         // do nothing, fake method
         return null;
       }
@@ -117,7 +118,8 @@ class TypeHandlerRegistryTest {
 
     typeHandlerRegistry.register(fakeHandler);
 
-    assertSame(fakeHandler, typeHandlerRegistry.getTypeHandler(new TypeReference<List<URI>>(){}));
+    assertSame(fakeHandler, typeHandlerRegistry.getTypeHandler(new TypeReference<List<URI>>() {
+    }));
   }
 
   @Test
@@ -149,6 +151,14 @@ class TypeHandlerRegistryTest {
     assertEquals(DateTypeHandler.class, typeHandlerRegistry.getTypeHandler(MyDate2.class).getClass());
   }
 
+  @Test
+  void testCustomEnumHandler() {
+    typeHandlerRegistry.register(CustomEnumTypeHandler.class);
+    assertEquals(CustomEnumTypeHandler.class,typeHandlerRegistry.getTypeHandler(CustomEnumType.class).getClass());
+
+
+  }
+
   interface SomeInterface {
   }
 
@@ -177,7 +187,7 @@ class TypeHandlerRegistryTest {
   public static class SomeInterfaceTypeHandler<E extends Enum<E> & SomeInterface> extends BaseTypeHandler<E> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType)
-        throws SQLException {
+      throws SQLException {
     }
 
     @Override
@@ -201,7 +211,7 @@ class TypeHandlerRegistryTest {
     typeHandlerRegistry.register(SomeInterfaceTypeHandler.class);
     assertNull(typeHandlerRegistry.getTypeHandler(SomeClass.class), "Registering interface works only for enums.");
     assertSame(EnumTypeHandler.class, typeHandlerRegistry.getTypeHandler(NoTypeHandlerInterfaceEnum.class).getClass(),
-        "When type handler for interface is not exist, apply default enum type handler.");
+      "When type handler for interface is not exist, apply default enum type handler.");
     assertSame(SomeInterfaceTypeHandler.class, typeHandlerRegistry.getTypeHandler(SomeEnum.class).getClass());
     assertSame(SomeInterfaceTypeHandler.class, typeHandlerRegistry.getTypeHandler(ExtendingSomeEnum.class).getClass());
     assertSame(SomeInterfaceTypeHandler.class, typeHandlerRegistry.getTypeHandler(ImplementingMultiInterfaceSomeEnum.class).getClass());
