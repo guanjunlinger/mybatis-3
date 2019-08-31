@@ -63,7 +63,7 @@ class SqlSessionTest extends BaseDataTest {
 
   @BeforeAll
   static void setup() throws Exception {
-    createBlogDataSource();
+    createMybatisDataSource();
     final String resource = "org/apache/ibatis/builder/MapperConfig.xml";
     final Reader reader = Resources.getResourceAsReader(resource);
     sqlMapper = new SqlSessionFactoryBuilder().build(reader);

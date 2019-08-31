@@ -34,6 +34,8 @@ import org.apache.ibatis.session.Configuration;
  * @author Clinton Begin
  * @author Simone Tripodi
  * @author Kzuki Shimizu
+ * 插入NULL值必须指定参数对应列的jdbcType
+ * 默认空参数的全局类型为Other,JDBC驱动对NULL和Other等特殊类型支持情况有差异
  */
 public abstract class BaseTypeHandler<T> extends TypeReference<T> implements TypeHandler<T> {
 

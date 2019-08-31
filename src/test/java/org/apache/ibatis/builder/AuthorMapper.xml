@@ -109,8 +109,8 @@
 	</select>
 
 	<insert id="insertAuthor" parameterType="org.apache.ibatis.domain.blog.Author">
-		insert into Author (id,username,password,email,bio)
-		values (#{id},#{username},#{password},#{email},#{bio})
+		insert into Author (id,username,password,email,bio,favourite_section)
+		values (#{id},#{username},#{password},#{email},#{bio},#{favouriteSection,jdbcType=VARCHAR})
 	</insert>
 
 	<update id="updateAuthor" parameterType="org.apache.ibatis.domain.blog.Author">
