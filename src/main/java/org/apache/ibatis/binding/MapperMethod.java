@@ -79,6 +79,10 @@ public class MapperMethod {
         } else if (method.returnsMany()) {
           result = executeForMany(sqlSession, args);
         } else if (method.returnsMap()) {
+          /**
+           * 1.通过DefaultResultHandler得到数据列表
+           * 2.通过DefaultMapResultHandler 从数据行中提取主键,合成Map数据结构
+           */
           result = executeForMap(sqlSession, args);
         } else if (method.returnsCursor()) {
           result = executeForCursor(sqlSession, args);
