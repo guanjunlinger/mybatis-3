@@ -56,7 +56,7 @@ public class Reflector {
   private final Map<String, Class<?>> getTypes = new HashMap<>();
   private Constructor<?> defaultConstructor;
 
-  //对象属性名不区分大小写
+  //属性名不区分大小写(key为属性名大写后结果,value是真实属性名)
 
   private Map<String, String> caseInsensitivePropertyMap = new HashMap<>();
 
