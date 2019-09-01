@@ -612,11 +612,13 @@ public class DefaultResultSetHandler implements ResultSetHandler {
       //返回类型可以直接由已注册的TypeHandler处理
       return createPrimitiveResultObject(rsw, resultMap, columnPrefix);
     } else if (!constructorMappings.isEmpty()) {
-      //返回类型存在带参构造函数
+      //返回类型存在constructor元素和对应的构造函数
       return createParameterizedResultObject(rsw, resultType, constructorMappings, constructorArgTypes, constructorArgs, columnPrefix);
     } else if (resultType.isInterface() || metaType.hasDefaultConstructor()) {
+      ////返回类型是集合相关接口;存在默认无参构造函数
       return objectFactory.create(resultType);
     } else if (shouldApplyAutomaticMappings(resultMap, false)) {
+      //自动匹配ResultSet全部列与相应的构造函数
       return createByConstructorSignature(rsw, resultType, constructorArgTypes, constructorArgs);
     }
     throw new ExecutorException("Do not know how to create an instance of " + resultType);
