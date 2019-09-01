@@ -43,7 +43,9 @@ public class ResultMap {
   private List<ResultMapping> idResultMappings;
   private List<ResultMapping> constructorResultMappings;
   private List<ResultMapping> propertyResultMappings;
+  //大写的列名集合
   private Set<String> mappedColumns;
+  //大写的对象属性名集合
   private Set<String> mappedProperties;
   private Discriminator discriminator;
   private boolean hasNestedResultMaps;

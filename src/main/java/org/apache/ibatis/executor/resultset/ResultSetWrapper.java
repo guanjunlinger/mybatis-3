@@ -180,6 +180,7 @@ public class ResultSetWrapper {
     return resultMap.getId() + ":" + columnPrefix;
   }
 
+  //为列名添加前缀
   private Set<String> prependPrefixes(Set<String> columnNames, String prefix) {
     if (columnNames == null || columnNames.isEmpty() || prefix == null || prefix.length() == 0) {
       return columnNames;
