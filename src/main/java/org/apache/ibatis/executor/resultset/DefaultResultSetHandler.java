@@ -404,6 +404,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
       //应用配置的映射规则
       foundValues = applyPropertyMappings(rsw, resultMap, metaObject, lazyLoader, columnPrefix) || foundValues;
       foundValues = lazyLoader.size() > 0 || foundValues;
+      //处理查询列全为NULL的情况
       rowValue = foundValues || configuration.isReturnInstanceForEmptyRow() ? rowValue : null;
     }
     return rowValue;
