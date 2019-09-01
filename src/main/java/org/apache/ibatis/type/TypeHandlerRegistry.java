@@ -221,12 +221,14 @@ public final class TypeHandlerRegistry {
     Map<JdbcType, TypeHandler<?>> jdbcHandlerMap = getJdbcHandlerMap(type);
     TypeHandler<?> handler = null;
     if (jdbcHandlerMap != null) {
+      //通过jdbcType类型搜索
       handler = jdbcHandlerMap.get(jdbcType);
+      //通过默认的NULL类型搜索
       if (handler == null) {
         handler = jdbcHandlerMap.get(null);
       }
       if (handler == null) {
-        // #591
+        // #591  查找其他jdbcType类型的处理器,如果多个,直接返回NULL
         handler = pickSoleHandler(jdbcHandlerMap);
       }
     }
