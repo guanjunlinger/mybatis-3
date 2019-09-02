@@ -527,7 +527,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
         }
         if (value != null || (configuration.isCallSettersOnNulls() && !mapping.primitive)) {
           // gcode issue #377, call setter on nulls (value is not 'found')
-          //为NULL属性列赋值
+          //为NULL属性列赋值,忽略基本数据类型
           metaObject.setValue(mapping.property, value);
         }
       }
