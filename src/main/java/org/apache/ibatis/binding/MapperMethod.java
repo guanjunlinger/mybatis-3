@@ -50,7 +50,9 @@ public class MapperMethod {
   private final MethodSignature method;
 
   public MapperMethod(Class<?> mapperInterface, Method method, Configuration config) {
+    //根据方法名获取SQL语句信息
     this.command = new SqlCommand(config, mapperInterface, method);
+    //根据返回值类型确定查询数量和处理逻辑;根据参数确定是否分页,是否自定义ResultHandler
     this.method = new MethodSignature(config, mapperInterface, method);
   }
 
@@ -79,10 +81,6 @@ public class MapperMethod {
         } else if (method.returnsMany()) {
           result = executeForMany(sqlSession, args);
         } else if (method.returnsMap()) {
-          /**
-           * 1.通过DefaultResultHandler得到数据列表
-           * 2.通过DefaultMapResultHandler 从数据行中提取主键,合成Map数据结构
-           */
           result = executeForMap(sqlSession, args);
         } else if (method.returnsCursor()) {
           result = executeForCursor(sqlSession, args);
@@ -277,32 +275,19 @@ public class MapperMethod {
   }
 
   public static class MethodSignature {
-    /**
-     * 返回值是否为集合或者数组
-     */
+
     private final boolean returnsMany;
-    /**
-     * 方法是否有@MapKey注解
-     */
+
     private final boolean returnsMap;
     private final boolean returnsVoid;
     private final boolean returnsCursor;
-    /**
-     * 返回值是否Optional类型
-     */
+
     private final boolean returnsOptional;
     private final Class<?> returnType;
-    /**
-     * 返回值为Map的键属性名
-     */
+
     private final String mapKey;
-    /**
-     * ResultHandler类型参数的索引位置
-     */
+
     private final Integer resultHandlerIndex;
-    /**
-     * RowBounds类型参数的索引位置
-     */
     private final Integer rowBoundsIndex;
     private final ParamNameResolver paramNameResolver;
 
