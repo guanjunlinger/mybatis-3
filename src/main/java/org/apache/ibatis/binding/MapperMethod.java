@@ -94,6 +94,7 @@ public class MapperMethod {
         }
         break;
       case FLUSH:
+        //提交批处理结果,关闭Statement对象
         result = sqlSession.flushStatements();
         break;
       default:
